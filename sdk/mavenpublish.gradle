@@ -1,0 +1,149 @@
+apply plugin: 'maven'
+// 上传到本地
+def _local = true
+// 是否未快照模式
+def _snapshot = false
+// 组id
+def _groupId = "com.ms"
+// 项目id
+def _artifactId = "module-dialog-loading"
+// 发布类型 aar jar
+def _packaging = "aar"
+// 发布版本
+def _releaseVersion = "latest"
+// 快照版本
+def _snapohotVersion = "latest-SNAPSHOT"
+
+def _description = "sdk "
+
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository url: 'file://' + new File(System.getProperty('user.home'), '.m2/repository').absolutePath
+            pom.version = _releaseVersion
+            pom.artifactId = _artifactId
+            pom.groupId = _groupId
+        }
+    }
+}
+
+
+
+
+//uploadArchives {
+//    repositories.mavenDeployer {
+//        snapshotRepository(url: "http://maven.mhw828.com:8081/repository/maven-snapshots/") {
+//            authentication(userName: System.getenv("MAVEN_USERNAME"), password: System.getenv("MAVEN_PASSWORD"))
+//        }
+//        pom.project {
+//            // 注意：【这里通过切换 versionName 的赋值来区分上传快照包还是正式包（snapshot 版本必须以 -SNAPSHOT 结尾）】
+//            //version snapshotVersionName
+//            //组 maven_pom_groupid
+//            pom.artifactId = _artifactId
+//            pom.groupId = _groupId
+//            //  类型
+//            packaging _packaging
+//            // 描述
+//            description _description
+//            // 版本
+//            version = _snapohotVersion
+//
+//        }
+//    }
+//}
+
+
+//uploadArchives {
+//    repositories.mavenDeployer {
+//        repository(url: "http://maven.mhw828.com:8081/repository/maven-releases/") {
+//            authentication(userName: System.getenv("MAVEN_USERNAME"), password: System.getenv("MAVEN_PASSWORD"))
+//        }
+//        pom.project {
+//            // 注意：【这里通过切换 versionName 的赋值来区分上传快照包还是正式包（snapshot 版本必须以 -SNAPSHOT 结尾）】
+//            //version snapshotVersionName
+//            //组 maven_pom_groupid
+//            pom.artifactId = _artifactId
+//            pom.groupId = _groupId
+//            //  类型
+//            packaging _packaging
+//            // 描述
+//            description _description
+//            // 版本
+//            version = _releaseVersion
+//        }
+//    }
+//}
+
+
+//uploadArchives {
+//    repositories.mavenDeployer {
+//        repository(url: "https://repo.rdc.aliyun.com/repository/73792-snapshot-z4fvGZ/") {
+//            authentication(userName: System.getenv("MAVEN_USERNAME"), password: System.getenv("MAVEN_PASSWORD"))
+//        }
+//        pom.project {
+//            // 注意：【这里通过切换 versionName 的赋值来区分上传快照包还是正式包（snapshot 版本必须以 -SNAPSHOT 结尾）】
+//            //version snapshotVersionName
+//            //组 maven_pom_groupid
+//            pom.artifactId = _artifactId
+//            pom.groupId = _groupId
+//            //  类型
+//            packaging _packaging
+//            // 描述
+//            description _description
+//            // 版本
+//            version = _snapohotVersion
+//        }
+//    }
+//}
+
+
+//uploadArchives {
+//    repositories.mavenDeployer {
+//        repository(url: "https://repo.rdc.aliyun.com/repository/73792-release-PXkyIy/") {
+//            authentication(userName: System.getenv("MAVEN_USERNAME"), password: System.getenv("MAVEN_PASSWORD"))
+//        }
+//        pom.project {
+//            // 注意：【这里通过切换 versionName 的赋值来区分上传快照包还是正式包（snapshot 版本必须以 -SNAPSHOT 结尾）】
+//            //version snapshotVersionName
+//            //组 maven_pom_groupid
+//            pom.artifactId = _artifactId
+//            pom.groupId = _groupId
+//            //  类型
+//            packaging _packaging
+//            // 描述
+//            description _description
+//            // 版本
+//            version = _releaseVersion
+//        }
+//    }
+//}
+
+
+// type显示指定任务类型或任务, 这里指定要执行Javadoc这个task,这个task在gradle中已经定义
+task androidJavadocs(type: Javadoc) {
+    // 设置源码所在的位置
+    source = android.sourceSets.main.java.sourceFiles
+}
+
+// 生成javadoc.jar
+task androidJavadocsJar(type: Jar) {
+    // 指定文档名称
+    classifier = 'javadoc'
+    from androidJavadocs.destinationDir
+}
+
+// 生成sources.jar
+task androidSourcesJar(type: Jar) {
+    classifier = 'sources'
+    from android.sourceSets.main.java.sourceFiles
+}
+
+// 产生相关配置文件的任务
+artifacts {
+    archives androidSourcesJar
+    archives androidJavadocsJar
+}
+
+task install(dependsOn: uploadArchives)
+
