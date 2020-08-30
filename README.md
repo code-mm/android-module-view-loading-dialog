@@ -9,11 +9,16 @@
 ### 添加
 
     mavenLocal()
-            
+
 ### 依赖
 
     implementation 'com.ms:module-dialog-loading:latest'
-    
-    
-    
-[](photo/1.gif)
+
+
+
+​    
+
+![](photo/1.gif)
+
+
+
