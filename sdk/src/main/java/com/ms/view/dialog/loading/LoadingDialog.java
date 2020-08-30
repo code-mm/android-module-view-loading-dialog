@@ -67,7 +67,6 @@ public class LoadingDialog extends Dialog {
         // 设置窗口大小
         WindowManager windowManager = getWindow().getWindowManager();
         int screenWidth = windowManager.getDefaultDisplay().getWidth();
-        Log.e(TAG, "initView:  screenWidth " + screenWidth);
         WindowManager.LayoutParams attributes = getWindow().getAttributes();
         attributes.alpha = 1.0f;
         attributes.width = screenWidth / 4;

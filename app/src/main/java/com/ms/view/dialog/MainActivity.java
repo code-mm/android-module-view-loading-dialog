@@ -23,8 +23,11 @@ public class MainActivity extends AppCompatActivity {
         dialog.setmCancelable(false);
         dialog.setmCanceledOnTouchOutside(false);
 
+        // 设置图片颜色
         dialog.setImageColor(Color.parseColor("#ffffff"));
+        // 设置文字颜色
         dialog.setTextColor(Color.parseColor("#ffffff"));
+        // 设置图片
         dialog.setDrawable(R.drawable.app_dialog_loading);
     }
 
