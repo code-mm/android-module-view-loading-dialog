@@ -1,3 +1,4 @@
-include ':sdk'
+include ':sdk0'
+include ':sdk1'
 include ':app'
 rootProject.name = "android-loading-dialog"
